@@ -1,12 +1,10 @@
-FROM php:8.2-apache
+FROM php:8.1-apache
 
-# PHP PDO and MySQL extension install karna
-RUN docker-php-ext-install pdo pdo_mysql
+# Apache config
+COPY default.conf /etc/apache2/sites-available/000-default.conf
 
-# Aapke code ko container me copy karna
-COPY ./php /var/www/html/php
+# Project files
 COPY ./public /var/www/html/
-COPY ./default.conf /etc/apache2/sites-enabled/000-default.conf
+COPY ./php /var/www/html/php
 
-
-    
+RUN docker-php-ext-install pdo pdo_mysql mysqli
