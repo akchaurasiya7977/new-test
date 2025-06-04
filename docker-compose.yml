@@ -9,9 +9,11 @@ services:
       - ./public:/var/www/html
       - ./default.conf:/etc/apache2/sites-enabled/000-default.conf
     ports:
-      - "8080:80"
+      - "8800:80"
     depends_on:
-      - db  # MySQL service name
+      - db
+    networks:
+      - mynetwork
 
   db:
     image: mysql:5.7
@@ -23,6 +25,12 @@ services:
       MYSQL_PASSWORD: userpass
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
 volumes:
   db_data:
+
+networks:
+  mynetwork:
+    external: true  # since network is created outside compose

@@ -1,22 +1,13 @@
 <?php
-$host = 'db';  // Docker service name for MySQL container, matches `depends_on: db`
+$host = 'mysqlcnt';   // docker-compose service name jo mysql ka hostname bhi hai
 $dbname = 'authdb';
-$user = 'user';
-$pass = 'userpass';
-$charset = 'utf8mb4';
-
-$dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
-
-$options = [
-    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION, 
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,      
-    PDO::ATTR_EMULATE_PREPARES   => false,                 
-];
+$username = 'root';
+$password = 'pwd@12345';
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-    // echo "DB connection successful!";
+    $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    echo "Connected successfully!";
 } catch (PDOException $e) {
-    die("Connection failed: " . $e->getMessage());
+    echo "Connection failed: " . $e->getMessage();
 }
-?>
