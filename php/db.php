@@ -1,5 +1,5 @@
 <?php
-$host = 'db';  // Docker me container name ya 'localhost'
+$host = 'dp';  // Docker me container name ya 'localhost'
 $dbname = 'authdb';
 $user = 'user';
 $pass = 'userpass';
@@ -14,9 +14,12 @@ $options = [
 ];
 
 try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
+    $pdo = new PDO('mysql:host=mysql-dp;dbname=authdb', 'user', 'userpass', [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+    ]);
+    // echo "DB connection successful!";
 } catch (PDOException $e) {
-    // For production, replace with generic error message or log it
-    die("Database connection failed: " . $e->getMessage());
+    die("Connection failed: " . $e->getMessage());
 }
 ?>
+
