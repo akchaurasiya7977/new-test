@@ -11,18 +11,18 @@ services:
     ports:
       - "8080:80"
     depends_on:
-      - db
+      - db  # ✅ Correct service name
 
   db:
     image: mysql:5.7
-    container_name: mysql-db
+    container_name: mysql-db  # ✅ Optional, but matches your earlier config
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: authdb
       MYSQL_USER: user
       MYSQL_PASSWORD: userpass
     volumes:
-      - db_data:/var/lib/mysql
+      - db_data:/var/lib/mysql  # ✅ Fixed volume name to match below
 
 volumes:
-  db_data:
+  db_data:  # ✅ Fixed volume name
